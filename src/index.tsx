@@ -9,16 +9,19 @@ import counter from './reducer';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 const store = createStore(counter);
-store.dispatch({ type: 'INCREMENT' });
-store.dispatch({ type: 'DECREMENT' });
 
-root.render(
-	<React.StrictMode>
-		<App value={store.getState()} />
-	</React.StrictMode>,
-);
+const render = () =>
+	root.render(
+		<React.StrictMode>
+			<App
+				value={store.getState()}
+				onIncrement={() => store.dispatch({ type: 'INCREMENT' })}
+				onDecrement={() => store.dispatch({ type: 'DECREMENT' })}
+			/>
+		</React.StrictMode>,
+	);
+render();
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+store.subscribe(render);
+
 reportWebVitals();
